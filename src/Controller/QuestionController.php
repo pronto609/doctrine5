@@ -25,9 +25,16 @@ class QuestionController extends AbstractController
     /**
      * @Route("/", name="app_homepage")
      */
-    public function homepage()
+    public function homepage(EntityManagerInterface $entityManager)
     {
-        return $this->render('question/homepage.html.twig');
+        $repository = $entityManager->getRepository(Question::class);
+        $questions = $repository->findAllAskedOrderedByNewest();
+//        dd($questions);
+        return $this->render('question/homepage.html.twig',
+        [
+            'questions' => $questions
+        ]
+        );
     }
 
     /**
@@ -99,13 +106,9 @@ class QuestionController extends AbstractController
             'Honestly, I like furry shoes better than MY cat',
             'Maybe... try saying the spell backwards?',
         ];
-        $questionText = 'I\'ve been turned into a cat, any *thoughts* on how to turn back? While I\'m **adorable**, I don\'t really care for cat food.';
-
-        $parsedQuestionText = $markdownHelper->parse($questionText);
 
         return $this->render('question/show.html.twig', [
-            'question' => ucwords(str_replace('-', ' ', $slug)),
-            'questionText' => $parsedQuestionText,
+            'question' => $question,
             'answers' => $answers,
         ]);
     }
