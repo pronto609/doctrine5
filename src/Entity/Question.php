@@ -107,10 +107,15 @@ class Question
         return sprintf('%s %d', $prefix, abs($this->getVotes()));
     }
 
-    public function setVotes(int $votes): self
+    public function upVotes(): self
     {
-        $this->votes = $votes;
+        $this->votes++;
+        return $this;
+    }
 
+    public function downVotes(): self
+    {
+        $this->votes--;
         return $this;
     }
 }
