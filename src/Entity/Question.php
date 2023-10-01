@@ -100,6 +100,12 @@ class Question
         return $this->votes;
     }
 
+    public function setVotes(int $votes): self
+    {
+        $this->votes = $votes;
+        return $this;
+    }
+
     public function getVotesString(): string
     {
         $prefix = $this->getVotes() === 0 ? '' : ($this->getVotes() > 0 ? '+' : '-');
