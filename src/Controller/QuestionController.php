@@ -69,6 +69,7 @@ class QuestionController extends AbstractController
                 new \DateTime(sprintf('-%d days', rand(1,100)))
             );
         }
+        $qestion->setVotes(rand(-20, 50));
         $entityManager->persist($qestion);
         $entityManager->flush();
 
